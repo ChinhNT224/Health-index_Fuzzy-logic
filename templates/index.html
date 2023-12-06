@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống đánh giá sức khỏe</title>
+    <style>
+        html {
+          margin: 0 0;
+          padding: 0 0;
+          outline: none;
+          box-sizing: border-box;
+        }
+
+        h1 {
+          font-size: 32px;
+          text-transform: capitalize;
+          text-align: center;
+        }
+
+        .container {
+          width: 1140px;
+          padding: 0px 15px;
+          margin: 0 auto;
+        }
+
+        form {
+          position: relative;
+          background-color: rgba(190, 169, 169, 0.2);
+        }
+
+        .box {
+          display: flex;
+          flex-wrap: wrap;
+          border-radius: 20px;
+        }
+        .box .item {
+          margin: 10px auto;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .box .item label {
+          font-size: 20px;
+          font-weight: 400;
+          text-transform: capitalize;
+          display: block;
+          width: 100%;
+          margin: 10px 30px;
+        }
+        .box .item .input-group {
+          padding: 10px;
+          border-radius: 5px;
+          font-size: 16px;
+          display: block;
+          width: 100%;
+          margin: 0 30px;
+        }
+        .box .box-infor {
+          width: calc(50% - 30px);
+          margin: 0 15px;
+        }
+        .box .box-select {
+          width: calc(50% - 30px);
+          margin: 0 15px;
+        }
+        .box .item-checkbox {
+          width: calc(50% - 30px);
+          margin: 0 15px;
+        }
+        .box .item-checkbox label {
+          width: 50%;
+        }
+        .box .item-checkbox .checkbox {
+          margin-top: 10px;
+          width: 20px;
+          height: 20px;
+        }
+
+        .btn {
+          width: 300px;
+          height: 60px;
+          border: 2px solid #fff;
+          font-size: 24px;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 40px 0;
+          color: #fff;
+          text-transform: uppercase;
+          background-color: #4aabc6;
+          cursor: pointer;
+          transition: all 300ms linear;
+        }
+        .btn:hover {
+          background-color: rgba(6, 133, 168, 0.5960784314);
+        }
+
+        .btn-reset {
+          position: absolute;
+          bottom: 0px;
+          right: 80px;
+        }
+
+        .btn-submit {
+          margin-left: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hệ thống đánh giá sức khỏe</h1>
+        <form action="/predict" method="post" id="inputForm">
+            <div class="box">
+                <div class="box-infor">
+                    <div class="item">
+                        <label for="name">Họ tên:</label>
+                        <input type="text" name="name" class="input-group" required>
+                    </div>
+                    <div class="item">
+                        <label for="age">Tuổi:</label>
+                        <input type="text" class="input-group" name="age" required>
+                    </div>
+                    <div class="item-checkbox">
+
+                        <div class="item">
+                            <label for="male">Nam</label>
+                            <input type="radio" class="checkbox" name="gender" id="male">
+                        </div>
+                        <div class="item">
+                            <label for="female">Nữ</label>
+                            <input type="radio" class="checkbox" name="gender" id="female">
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="box-select">
+                    <div class="item">
+                        <label for="bmi">BMI:</label>
+                        <input type="text" name="bmi" class="input-group inputField" id="bmi" required>
+                        <span id="bmiError" class="inputError"></span><br>
+                    </div>
+                    <div class="item">
+                        <label for="respiratory_rate">Tần suất hô hấp:</label>
+                        <input type="text" id="respiratory_rate" name="respiratory_rate" class="input-group inputField"required>
+                        <span id="respiratoryError" class="inputError"></span><br>
+                    </div>
+                    <div class="item">
+                        <label for="heart_rate">Nhịp tim:</label>
+                        <input type="text" id="heart_rate" name="heart_rate"class="input-group inputField" required>
+                        <span id="heart_rateError" class="inputError"></span><br>
+                    </div>
+                    <div class="item">
+                        <label for="systolic_blood_pressure">Huyết áp tâm thu:</label>
+                        <input type="text" id="systolic_blood_pressure" name="systolic_blood_pressure"class="input-group inputField" required>
+                        <span id="systolic_blood_pressureError" class="inputError"></span><br>
+                    </div>
+                    <div class="item">
+                        <label for="vision">Thị lực:</label>
+                        <input type="text" id="vision" name="vision"class="input-group inputField" required>
+                        <span id="visionError" class="inputError"></span><br>
+                    </div>
+
+
+                </div>
+            <input type="submit"  class="btn btn-submit" value="Đánh giá">
+
+            </div>
+
+        </form>
+        <form action="/" method="get">
+            <input type="submit" class="btn btn-reset" value="Xóa">
+        </form>
+    </div>
+
+</body>
+
+<script>
+    document.getElementById('inputForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var bmi = parseFloat(document.getElementById('bmi').value);
+        var respiratoryRate = parseFloat(document.getElementById('respiratory_rate').value);
+        var heart_rate= parseFloat(document.getElementById('heart_rate').value);
+        var systolic_blood_pressure= parseFloat(document.getElementById('systolic_blood_pressure').value);
+        var vision= parseFloat(document.getElementById('vision').value);
+
+        var bmiError = document.getElementById('bmiError');
+        var respiratoryError = document.getElementById('respiratoryError');
+        var heart_rateError = document.getElementById('heart_rateError');
+        var systolic_blood_pressureError = document.getElementById('systolic_blood_pressureError');
+        var visionError = document.getElementById('visionError');
+
+
+        bmiError.innerText = validateInputRange(bmi, 0, 40) ? '' : 'Nhập lại BMI (0-40)';
+        respiratoryError.innerText = validateInputRange(respiratoryRate, 0, 40) ? '' : 'Nhập lại tần suất hô hấp (0-40)';
+        heart_rateError.innerText = validateInputRange(heart_rate, 0, 120) ? '' : 'Nhập lại nhịp tim (0-120)';
+        systolic_blood_pressureError.innerText = validateInputRange(systolic_blood_pressure, 0, 200) ? '' : 'Nhập lại huyết áp tâm thu (0-200)';
+        visionError.innerText = validateInputRange(vision, 0, 10) ? '' : 'Nhập lại thị lực (0-10)';
+
+        var errorMessages = [bmiError.innerText, respiratoryError.innerText, heart_rateError.innerText ,visionError.innerText,systolic_blood_pressureError.innerText ];
+        if (errorMessages[0].trim() !== ''  ) {
+            return;
+        }
+        if (errorMessages[1].trim() !== ''  ) {
+            return;
+        }
+        if (errorMessages[2].trim() !== ''  ) {
+            return;
+        }
+        if (errorMessages[3].trim() !== ''  ) {
+            return;
+        }
+        if (errorMessages[4].trim() !== ''  ) {
+            return;
+        }
+        else{
+            this.submit();
+        }
+
+    });
+
+    function validateInputRange(value, min, max) {
+        return value >= min && value <= max && !isNaN(value);
+    }
+</script>
+
+</html>

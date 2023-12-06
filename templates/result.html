@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction Result</title>
+    <style>
+        html {
+          margin: 0 0;
+          padding: 0 0;
+          outline: none;
+          box-sizing: border-box;
+        }
+
+        .container {
+          width: 1140px;
+          padding: 0px 15px;
+          margin: 0 auto;
+        }
+        .container h1 {
+          font-size: 32px;
+          text-transform: capitalize;
+          text-align: center;
+        }
+        .container .content {
+          display: flex;
+          flex-wrap: wrap;
+          background: rgba(204, 204, 204, 0.4784313725);
+        }
+        .container .content .box {
+          text-align: center;
+          width: calc(40% - 15px);
+          border-right: 2px solid rgb(255, 255, 255);
+        }
+        .container .content .box .title_name {
+          margin-top: 150px;
+          margin-bottom: 10px;
+          font-size: 24px;
+          text-transform: capitalize;
+        }
+        .container .content .box .title_stt {
+          font-size: 24px;
+          text-transform: capitalize;
+        }
+        .container .content .img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: calc(60% - 15px);
+          margin: 40px auto;
+        }
+        .container .content .img img {
+          width: 500px;
+          height: 350px;
+        }
+
+        .btn {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 60px;
+            border: 2px solid red;
+            text-decoration: none;
+            font-size: 32px;
+            color: #fff;
+            background-color: #c80e0e;
+        }
+    </style>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kết quả đánh giá sức khỏe</h1>
+
+        <div class="content">
+            <div class="box">
+                <p class="title_name">Chỉ số sức khỏe: <span>{{ result[0]}}</span></p>
+                <p class="title_stt"> Tinh trạng sức khỏe: <span> {{ result[1]}}</span></p>
+            </div>
+            <div class="img">
+                <img src="{{ url_for('health_index_image') }}" alt="Health Index Image" width="1000" height="700">
+            </div>
+        </div>
+
+        <a href="/" class="btn">Quay lại</a>
+    </div>
+
+</body>
+
+</html>
